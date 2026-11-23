@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASH FOOD HUB - Indian Restaurant</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Poppins',sans-serif;background:#fffaf2;color:#292929}
+:root{--orange:#ff681f;--yellow:#ffbe0b;--green:#168b52}
+.navbar{background:#09540f;padding:15px 5%}
+.navbar-brand{font-size:25px;font-weight:800;color:var(--yellow)!important}
+.nav-link{color:white!important;margin:0 6px;cursor:pointer}
+.nav-link:hover,.nav-link.active{color:var(--yellow)!important}
+.page{display:none;min-height:75vh;padding:60px 6%;animation:fade .5s}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.hero{min-height:560px;display:flex;align-items:center;padding:50px;background:linear-gradient(90deg,#000b,#0003),url('https://images.unsplash.com/photo-1547592180-85f173990554?w=1600') center/cover;border-radius:25px;color:white}
+.hero h1{font-size:clamp(35px,5vw,65px);font-weight:800}
+.hero h1 span{color:var(--yellow)}
+.hero p{max-width:600px;line-height:1.9}
+.btn-food{background:var(--orange);color:white;padding:12px 27px;border:0;border-radius:30px;font-weight:600}
+.btn-food:hover{background:#d94a0b;color:white}
+.section-title{text-align:center;font-weight:800;margin-bottom:12px}
+.section-subtitle{text-align:center;color:#777;margin-bottom:40px}
+.food-card{background:white;padding:22px 15px;border-radius:20px;text-align:center;box-shadow:0 5px 25px #00000012;height:100%;transition:.3s;border-bottom:4px solid var(--orange)}
+.food-card:hover{transform:translateY(-8px)}
+/* CIRCULAR FOOD IMAGES */
+.food-card img,.gallery-img,.menu-item img{
+width:185px;height:185px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 18px;border:6px solid #fff0d9;box-shadow:0 5px 15px #0002;transition:.4s
+}
+.food-card img:hover,.gallery-img:hover,.menu-item img:hover{transform:scale(1.08)}
+.food-card h4{font-size:18px;font-weight:700}
+.price{color:var(--green);font-size:20px;font-weight:800}
+.category-tag{display:inline-block;background:#e4f8eb;color:#168b52;padding:5px 13px;border-radius:20px;font-size:12px;margin-bottom:10px;font-weight:700}
+.nonveg{background:#ffe8e8;color:#d32f2f}
+.feature-box{background:#fff0d9;padding:30px;border-radius:20px;text-align:center;height:100%}
+.feature-box .icon{font-size:40px}
+.table thead{background:#222;color:white}
+.gallery-box{background:white;padding:18px;border-radius:20px;text-align:center;box-shadow:0 5px 20px #0001;height:100%}
+.contact-box{background:white;padding:30px;border-radius:20px;box-shadow:0 5px 25px #0001;height:100%}
+.form-control{padding:13px;border-radius:10px}
+.map-frame{width:100%;height:350px;border:0;border-radius:20px}
+.page-navigation{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:45px;padding-top:20px;border-top:1px solid #ddd}
+.page-navigation button{background:#222;color:white;border:0;padding:12px 22px;border-radius:25px}
+.page-navigation button:hover{background:var(--orange)}
+footer{background:#171717;color:#ddd;padding:45px 6% 20px;text-align:center}
+footer h3{color:var(--yellow);font-weight:800}
+footer a{color:#ddd;text-decoration:none;cursor:pointer;margin:6px 10px;display:inline-block}
+footer a:hover{color:var(--yellow)}
+.footer-bottom{border-top:1px solid #444;margin-top:25px;padding-top:20px}
+@media(max-width:768px){
+.page{padding:35px 5%}
+.hero{min-height:460px;padding:25px;text-align:center;justify-content:center}
+.hero p{margin:auto auto 20px}
+.food-card img,.gallery-img,.menu-item img{width:145px;height:145px}
+footer{text-align:center;padding:40px 15px 20px}
+.page-navigation button{padding:10px 12px;font-size:12px}
+.navbar-brand{font-size:20px}
+}
+@media(max-width:380px){.food-card img,.gallery-img{width:125px;height:125px}}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+<div class="container-fluid">
+<a class="navbar-brand" href="#" onclick="showPage(0);return false">🍴 ASH FOOD HUB</a>
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navMenu">
+<ul class="navbar-nav ms-auto">
+<li class="nav-item"><a class="nav-link active" onclick="showPage(0)">Home</a></li>
+<li class="nav-item"><a class="nav-link" onclick="showPage(1)">North Indian</a></li>
+<li class="nav-item"><a class="nav-link" onclick="showPage(2)">South Indian</a></li>
+<li class="nav-item"><a class="nav-link" onclick="showPage(3)">Veg & Non-Veg</a></li>
+<li class="nav-item"><a class="nav-link" onclick="showPage(4)">Menu</a></li>
+<li class="nav-item"><a class="nav-link" onclick="showPage(5)">Gallery</a></li>
+<li class="nav-item"><a class="nav-link" onclick="showPage(6)">Contact</a></li>
+</ul>
+</div>
+</div>
+</nav>
+
+<!-- HOME PAGE -->
+<section class="page active" id="page0">
+<div class="hero" data-aos="zoom-in">
+<div>
+<h1>Welcome to <span>ASH FOOD HUB</span></h1>
+<h3>Delicious Food, Beautiful Moments!</h3>
+<p>Enjoy authentic Indian flavours, delicious traditional meals and freshly prepared dishes. Taste happiness in every bite!</p>
+<button class="btn-food" onclick="showPage(4)">Explore Our Menu →</button>
+</div>
+</div>
+
+<h2 class="section-title mt-5">Explore Our Food Categories</h2>
+<p class="section-subtitle">Discover the best flavours from India</p>
+
+<div class="row g-4">
+<div class="col-md-3 col-6" data-aos="fade-up"><div class="food-card">
+<img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=500" alt="North Indian food">
+<h4>North Indian</h4><p>Rich curries and naan.</p><button class="btn btn-warning" onclick="showPage(1)">Explore</button>
+</div></div>
+<div class="col-md-3 col-6" data-aos="fade-up"><div class="food-card">
+<img src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500" alt="South Indian food">
+<h4>South Indian</h4><p>Dosa, idli and meals.</p><button class="btn btn-warning" onclick="showPage(2)">Explore</button>
+</div></div>
+<div class="col-md-3 col-6" data-aos="fade-up"><div class="food-card">
+<img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500" alt="Vegetarian food">
+<h4>Vegetarian</h4><p>Fresh vegetarian dishes.</p><button class="btn btn-warning" onclick="showPage(3)">Explore</button>
+</div></div>
+<div class="col-md-3 col-6" data-aos="fade-up"><div class="food-card">
+<img src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500" alt="Non vegetarian food">
+<h4>Non-Vegetarian</h4><p>Chicken and seafood.</p><button class="btn btn-warning" onclick="showPage(3)">Explore</button>
+</div></div>
+</div>
+
+<div class="row g-4 mt-5">
+<div class="col-md-4"><div class="feature-box"><div class="icon">🍽️</div><h4>Fresh Ingredients</h4><p>Quality ingredients in every meal.</p></div></div>
+<div class="col-md-4"><div class="feature-box"><div class="icon">👨‍🍳</div><h4>Expert Chefs</h4><p>Prepared with traditional recipes.</p></div></div>
+<div class="col-md-4"><div class="feature-box"><div class="icon">❤️</div><h4>Made with Love</h4><p>Great food and happy experiences.</p></div></div>
+</div>
+</section>
+
+<!-- NORTH INDIAN PAGE -->
+<section class="page" id="page1">
+<h1 class="section-title">🍛 North Indian Specialities</h1>
+<p class="section-subtitle">Taste the royal flavours of North India</p>
+<div class="row g-4" id="northFoods"></div>
+</section>
+
+<!-- SOUTH INDIAN PAGE -->
+<section class="page" id="page2">
+<h1 class="section-title">🥥 South Indian Specialities</h1>
+<p class="section-subtitle">Traditional South Indian food and freshness</p>
+<div class="row g-4" id="southFoods"></div>
+</section>
+
+<!-- VEG AND NON VEG PAGE -->
+<section class="page" id="page3">
+<h1 class="section-title">🥗 Vegetarian & Non-Vegetarian</h1>
+<p class="section-subtitle">Something delicious for everyone</p>
+<h2 class="text-success mb-4">🌱 Vegetarian Specials</h2>
+<div class="row g-4 mb-5" id="vegFoods"></div>
+<h2 class="text-danger mb-4">🍗 Non-Vegetarian Specials</h2>
+<div class="row g-4" id="nonVegFoods"></div>
+</section>
+
+<!-- MENU PAGE -->
+<section class="page" id="page4">
+<h1 class="section-title">📋 Our Complete Food Menu</h1>
+<p class="section-subtitle">Explore our dishes and sample prices</p>
+<div class="table-responsive">
+<table class="table table-bordered table-striped text-center align-middle">
+<thead><tr><th>Category</th><th>Dish Name</th><th>Type</th><th>Price</th></tr></thead>
+<tbody id="menuRows"></tbody>
+</table>
+</div>
+<h2 class="section-title mt-5">Our Ingredients</h2>
+<div class="table-responsive">
+<table class="table table-bordered text-center">
+<thead><tr><th>Ingredient</th><th>Used In</th><th>Purpose</th></tr></thead>
+<tbody>
+<tr><td>Fresh Vegetables</td><td>Curries and salads</td><td>Freshness and nutrition</td></tr>
+<tr><td>Basmati Rice</td><td>Biryani</td><td>Fragrance and texture</td></tr>
+<tr><td>Paneer</td><td>Vegetarian curries</td><td>Protein and flavour</td></tr>
+<tr><td>Indian Spices</td><td>All curries</td><td>Authentic taste</td></tr>
+<tr><td>Fresh Chicken</td><td>Non-veg dishes</td><td>Quality and flavour</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- GALLERY PAGE -->
+<section class="page" id="page5">
+<h1 class="section-title">📸 Food Gallery</h1>
+<p class="section-subtitle">A collection of delicious food moments</p>
+<div class="row g-4" id="galleryFoods"></div>
+</section>
+
+<!-- CONTACT PAGE -->
+<section class="page" id="page6">
+<h1 class="section-title">📍 Contact & Location</h1>
+<p class="section-subtitle">Visit ASH FOOD HUB and enjoy delicious food</p>
+<div class="row g-4">
+<div class="col-md-6">
+<div class="contact-box">
+<h3>Send Us an Enquiry</h3>
+<p>We would love to hear from you.</p>
+<form id="contactForm">
+<div class="mb-3"><label class="form-label">Your Name</label><input class="form-control" placeholder="Enter your name" required></div>
+<div class="mb-3"><label class="form-label">Your Email</label><input type="email" class="form-control" placeholder="Enter your email" required></div>
+<div class="mb-3"><label class="form-label">Subject</label>
+<select class="form-control" required><option value="">Select enquiry</option><option>Food Enquiry</option><option>Table Reservation</option><option>Feedback</option></select>
+</div>
+<div class="mb-3"><label class="form-label">Message</label><textarea class="form-control" rows="4" placeholder="Write your message" required></textarea></div>
+<button class="btn-food" type="submit">Submit Enquiry</button>
+</form>
+<p id="formMessage" class="text-success mt-3"></p>
+</div>
+</div>
+<div class="col-md-6">
+<div class="contact-box">
+<h3>Our Location</h3>
+<p>ASH FOOD HUB, Bengaluru, Karnataka, India</p>
+<iframe class="map-frame" src=""photo-1626777552726-4a6b54c97e46"" loading="lazy" title="Sample Bengaluru map"></iframe>
+<p class="mt-3">📍 Bengaluru, Karnataka, India</p>
+<p>🕒 Opening Hours: 10:00 AM – 10:00 PM</p>
+<p>🍽️ Dine-in and takeaway</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<h3>🍴 ASH FOOD HUB</h3>
+<p>Authentic Indian Taste | Fresh Food | Happy Moments</p>
+<div class="mt-3">
+<a onclick="showPage(0)">Home</a>
+<a onclick="showPage(1)">North Indian</a>
+<a onclick="showPage(2)">South Indian</a>
+<a onclick="showPage(3)">Veg & Non-Veg</a>
+<a onclick="showPage(4)">Menu</a>
+<a onclick="showPage(5)">Gallery</a>
+<a onclick="showPage(6)">Contact</a>
+</div>
+<div class="row justify-content-center mt-4">
+<div class="col-md-4"><h5 class="text-warning">Specialities</h5><p>North Indian Food</p><p>South Indian Food</p><p>Vegetarian Dishes</p><p>Non-Vegetarian Dishes</p></div>
+<div class="col-md-4"><h5 class="text-warning">Opening Hours</h5><p>Monday – Friday: 10 AM – 10 PM</p><p>Saturday: 10 AM – 11 PM</p><p>Sunday: 10 AM – 11 PM</p></div>
+<div class="col-md-4"><h5 class="text-warning">Our Location</h5><p>Bengaluru, Karnataka, India</p><p>Fresh Food Every Day</p></div>
+</div>
+<div class="footer-bottom">
+<p>© 2026 ASH FOOD HUB. All Rights Reserved.</p>
+<p>Designed with ❤️ for Food Lovers</p>
+</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+AOS.init({duration:900,once:true});
+
+const foods = [
+{name:"Butter Chicken",desc:"Creamy tomato chicken curry",price:280,type:"Non-Veg",cat:"North Indian",img:"photo-1565557623262-b51c2513a641"},
+{name:"Paneer Butter Masala",desc:"Paneer in rich creamy gravy",price:220,type:"Veg",cat:"North Indian",img:"photo-1585937421612-70a008356fbe"},
+{name:"Punjabi Samosa",desc:"Crispy potato-filled snack",price:50,type:"Veg",cat:"North Indian",img:"photo-1601050690597-df0568f70950"},
+{name:"Butter Naan",desc:"Soft traditional Indian bread",price:60,type:"Veg",cat:"North Indian",img:"photo-1628294895950-9805252327bc"},
+{name:"Chole Bhature",desc:"Spicy chickpeas with bhature",price:160,type:"Veg",cat:"North Indian",img:"photo-1567188040759-fb8a883dc6d8"},
+{name:"Dal Makhani",desc:"Creamy black lentils",price:190,type:"Veg",cat:"North Indian",img:"photo-1631452180519-c014fe946bc7"},
+{name:"Chicken Tikka",desc:"Smoky grilled chicken pieces",price:260,type:"Non-Veg",cat:"North Indian",img:"photo-1603894584373-5ac82b2ae398"},
+{name:"Masala Dosa",desc:"Crispy dosa with potato masala",price:90,type:"Veg",cat:"South Indian",img:"photo-1589301760014-d929f3979dbc"},
+{name:"Idli Sambar",desc:"Soft idli with hot sambar",price:60,type:"Veg",cat:"South Indian",img:"photo-1626132647523-66f5bf380027"},
+{name:"Medu Vada",desc:"Crispy lentil doughnuts",price:60,type:"Veg",cat:"South Indian",img:"photo-1630383249896-424e482df921"},
+{name:"South Indian Meals",desc:"Traditional rice and side dishes",price:150,type:"Veg",cat:"South Indian",img:"photo-1596797038530-2c107229654b"},
+{name:"Onion Uttapam",desc:"Thick pancake with vegetables",price:100,type:"Veg",cat:"South Indian",img:"photo-1567337710282-00832b415979"},
+
+{name:"Fish Curry",desc:"Traditional spicy fish curry",price:220,type:"Non-Veg",cat:"South Indian",img:"photo-1519708227418-c8fd9a32b7a2"},
+{name:"Fresh Vegetable Salad",desc:"Healthy mixed vegetable salad",price:100,type:"Veg",cat:"Vegetarian",img:"photo-1512621776951-a57141f2eefd"},
+{name:"Paneer Curry",desc:"Traditional paneer curry",price:180,type:"Veg",cat:"Vegetarian",img:"photo-1585937421612-70a008356fbe"},
+{name:"Dal Tadka",desc:"Yellow lentils with spices",price:140,type:"Veg",cat:"Vegetarian",img:"photo-1631452180519-c014fe946bc7"},
+{name:"Vegetable Rice",desc:"Rice with fresh vegetables",price:130,type:"Veg",cat:"Vegetarian",img:"photo-1596797038530-2c107229654b"},
+{name:"Chicken Curry",desc:"Spicy chicken curry",price:220,type:"Non-Veg",cat:"Non-Vegetarian",img:"photo-1603894584373-5ac82b2ae398"},
+{name:"Fish Fry",desc:"Crispy Indian fish fry",price:240,type:"Non-Veg",cat:"Non-Vegetarian",img:"photo-1519708227418-c8fd9a32b7a2"},
+{name:"chittinadu chicken",desc:"girlled rice with vegs",price:300,type:"Non-Veg",cat:"Non-Vegetarian",img:"photo-1626777552726-4a6b54c97e46"},
+{name:"Gulab Jamun",desc:"Traditional Indian sweet",price:70,type:"Veg",cat:"Dessert",img:"photo-1666190092159-5f2e9b2a4f77"},
+{name:"Ice Cream",desc:"Creamy dessert",price:90,type:"Veg",cat:"Dessert",img:"photo-1563805042-7684c019e1cb"}
+];
+
+function foodCard(food){
+return `<div class="col-lg-3 col-md-4 col-6" data-aos="fade-up">
+<div class="food-card">
+<img src="https://images.unsplash.com/${food.img}?auto=format&fit=crop&w=500&q=80" alt="${food.name}">
+<span class="category-tag ${food.type==='Non-Veg'?'nonveg':''}">${food.type}</span>
+<h4>${food.name}</h4><p>${food.desc}</p>
+<div class="price">₹${food.price}</div>
+</div></div>`;
+}
+
+function renderFoods(){
+document.getElementById('northFoods').innerHTML=foods.filter(f=>f.cat==='North Indian').map(foodCard).join('');
+document.getElementById('southFoods').innerHTML=foods.filter(f=>f.cat==='South Indian').map(foodCard).join('');
+document.getElementById('vegFoods').innerHTML=foods.filter(f=>f.type==='Veg' && f.cat!=='South Indian' && f.cat!=='North Indian' && f.cat!=='Dessert').map(foodCard).join('');
+document.getElementById('nonVegFoods').innerHTML=foods.filter(f=>f.type==='Non-Veg' && f.cat!=='South Indian' && f.cat!=='North Indian').map(foodCard).join('');
+
+document.getElementById('menuRows').innerHTML=foods.map(f=>`<tr><td>${f.cat}</td><td>${f.name}</td><td>${f.type}</td><td>₹${f.price}</td></tr>`).join('');
+
+document.getElementById('galleryFoods').innerHTML=foods.slice(0,12).map(f=>`
+<div class="col-lg-3 col-md-4 col-6"><div class="gallery-box">
+<img class="gallery-img" src="https://images.unsplash.com/${f.img}?auto=format&fit=crop&w=500&q=80" alt="${f.name}">
+<h5>${f.name}</h5><p>${f.cat}</p>
+</div></div>`).join('');
+}
+renderFoods();
+
+let currentPage=0;
+const totalPages=7;
+
+function showPage(number){
+if(number<0 || number>=totalPages)return;
+currentPage=number;
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById('page'+number).classList.add('active');
+document.querySelectorAll('.nav-link').forEach((link,i)=>link.classList.toggle('active',i===number));
+window.scrollTo({top:0,behavior:'smooth'});
+const nav=document.getElementById('navMenu');
+if(nav.classList.contains('show'))bootstrap.Collapse.getOrCreateInstance(nav).hide();
+AOS.refreshHard();
+}
+
+function nextPage(){if(currentPage<totalPages-1)showPage(currentPage+1)}
+function previousPage(){if(currentPage>0)showPage(currentPage-1)}
+
+document.querySelectorAll('.page').forEach((page,index)=>{
+const nav=document.createElement('div');
+nav.className='page-navigation';
+nav.innerHTML=`
+<button onclick="previousPage()" ${index===0?'disabled':''}>← Previous Page</button>
+<span>Page ${index+1} of ${totalPages}</span>
+<button onclick="nextPage()" ${index===totalPages-1?'disabled':''}>Next Page →</button>`;
+page.appendChild(nav);
+});
+
+document.getElementById('contactForm').addEventListener('submit',function(e){
+e.preventDefault();
+document.getElementById('formMessage').textContent='Thank you! Your enquiry has been submitted in this demo.';
+this.reset();
+});
+</script>
+</body>
+</html>
